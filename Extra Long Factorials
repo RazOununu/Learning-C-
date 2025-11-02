@@ -1,0 +1,58 @@
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
+
+class Result
+{
+
+    /*
+     * Complete the 'extraLongFactorials' function below.
+     *
+     * The function accepts INTEGER n as parameter.
+     */
+
+    public static void extraLongFactorials(int n)
+    {
+        List<int> d = new List<int>();
+        d.Add(1);
+        
+        for(int x=2; x<=n; x++){
+            int carry = 0;
+            for(int i = 0; i < d.Count(); i++){
+                int resD = d[i]*x + carry;//For every digit
+                d[i] = resD % 10; //LSB
+                carry = resD/ 10; //MSB
+            }
+            //After all digit, add carry
+            while (carry>0){
+                d.Add(carry % 10);
+                carry /= 10;
+            }
+        }
+        
+        //Print in reverce
+        for(int i = d.Count -1; i>=0; i--)
+            Console.Write(d[i]);
+    }
+
+}
+
+class Solution
+{
+    public static void Main(string[] args)
+    {
+        int n = Convert.ToInt32(Console.ReadLine().Trim());
+
+        Result.extraLongFactorials(n);
+    }
+}
