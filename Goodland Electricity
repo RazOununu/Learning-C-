@@ -1,0 +1,71 @@
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
+
+class Result
+{
+
+    /*
+     * Complete the 'pylons' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts following parameters:
+     *  1. INTEGER k
+     *  2. INTEGER_ARRAY arr
+     */
+
+    public static int pylons(int k, List<int> arr){
+        int powerPlants = 0;
+        
+        int indexCity = 0;
+        int n = arr.Count;
+        while(indexCity< n){ //Loop on city from left to right
+            int right = Math.Min(n-1, indexCity + k - 1); //Right limit
+            int left = Math.Max(0, indexCity - (k - 1)); //Left limit
+            //Find the right city with power plants
+            while(right>=left && arr[right]==0)
+                right--;
+                
+            if(right<left) //Not found power plant + not valid
+                return -1;
+                
+            powerPlants++; //Put power plant (rightist)
+            indexCity= right+ k; //City out from limit from new plant
+        }
+        return powerPlants;
+    }
+
+}
+
+class Solution
+{
+    public static void Main(string[] args)
+    {
+        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+        string[] firstMultipleInput = Console.ReadLine().TrimEnd().Split(' ');
+
+        int n = Convert.ToInt32(firstMultipleInput[0]);
+
+        int k = Convert.ToInt32(firstMultipleInput[1]);
+
+        List<int> arr = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(arrTemp => Convert.ToInt32(arrTemp)).ToList();
+
+        int result = Result.pylons(k, arr);
+
+        textWriter.WriteLine(result);
+
+        textWriter.Flush();
+        textWriter.Close();
+    }
+}
