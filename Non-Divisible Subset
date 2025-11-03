@@ -36,7 +36,7 @@ class Result
         max = Math.Min(countRemainder[0], 1);
         
         for(int r=1; r<=k/2; r++){
-            if(k==k-r) //k/2+k/2-->%k
+            if(r==k-r) //k/2+k/2-->%k
                 max+= Math.Min(countRemainder[r], 1);
             else //r+k-r-->%k
                 max+= Math.Max(countRemainder[r], countRemainder[k-r]); //Maximal x from s
