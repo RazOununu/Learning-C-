@@ -44,7 +44,7 @@ class Result
             return $"{inWords[h]} o' clock";
         //Half hour
         if(m == 30)
-            return $"half past {inWords[30]}";
+            return $"half past {inWords[h]}";
         //Quarter hour
         if(m == 15)
             return $"quarter past {inWords[h]}";
@@ -52,15 +52,16 @@ class Result
         if(m == 45)
             return $"quarter to {inWords[h == 12? 1: h+1]}";
             
-        string single = (m == 1)? "minute": "minutes";//Twice in the same scope = error.
         //m<30 
         if(m<30){
+            string single = (m == 1)? "minute": "minutes"; //Recognize 1 minute
             return $"{inWords[m]} {single} past {inWords[h]}";
         }    
         //m>30  
         int remainingM = 60-m;
+        string unit = (remainingM == 1)? "minute": "minutes"; //Recognize 1 minute to
         int nextH = (h == 12)? 1: h+1;
-        return $"{inWords[remainingM]} {single} to {inWords[nextH]}";
+        return $"{inWords[remainingM]} {unit} to {inWords[nextH]}";
     }
 }
 
